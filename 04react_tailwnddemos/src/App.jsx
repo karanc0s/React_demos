@@ -1,35 +1,49 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import NavMenu from "./components/NavMenu.jsx";
 
 function App() {
-  const [count, setCount] = useState(0)
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+
+    // const data = ["Item 1", "Item 2", "Item 3"]
+
+    return (
+        <>
+            <div className="h-screen bg-red-100">
+
+                <div className="bg-maroon flex items-end justify-center pt-7 pb-5">
+                    <img
+                        src="https://naadpargaasusa.org/wp-content/uploads/2021/12/Logo_Circle-removebg-preview-2-100x100.png"
+                        alt=""/>
+                    <h1 className="font-serif font-medium text-7xl text-white ml-3">My Store</h1>
+                    <h4 className="font-serif text-md text-white ml-5">A Vision</h4>
+                </div>
+
+                <div className="bg-maroon flex justify-center">
+
+                    {/*<DropDown label="Literature Festival" />*/}
+                    {/*<DropDown label="Poetry Festival" />*/}
+                    {/*<DropDown label="Seminars" />*/}
+                    {/*<DropDown label="Publications" />*/}
+
+                    <NavMenu />
+
+
+                </div>
+
+
+
+
+
+
+                <div>
+                    <h1>asfasdfasfd</h1>
+                </div>
+
+
+            </div>
+        </>
+
+    )
 }
 
 export default App
+
