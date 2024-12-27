@@ -31,3 +31,6 @@ export const useTodoContext = ()=> {
 }
 
 export const TodoContextProvider = TodoContext.Provider
+/// export defat fun com({ obj }){}
+
+// <Com obj={item} />

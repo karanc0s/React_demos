@@ -17,7 +17,7 @@ export default function TodoItem({todoItem} : Props){
         updateTodo(todoItem.id, {...todoItem, todoMsg: msg})
         setIsTodoEditable(false)
     }
-
+    /// `${}` , '' , ""
     return (
         <div className={`flex border border-black/10 rounded-lg px-3 py-1.5 gap-x-3 shadow-sm shadow-white/50 duration-300  text-black 
         ${todoItem.completed ? "bg-[#c6e9a7]" : "bg-[#ccbed7]"}`}>
