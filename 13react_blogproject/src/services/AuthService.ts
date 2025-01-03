@@ -35,9 +35,11 @@ class AuthService {
         }
     }
 
-    async login(email:string , password:string)  {
+    async login(email:string = "user@gmail.com", password:string = "user@123")  {
         try{
-            return await this.account.createEmailPasswordSession(email, password)
+            const result = await this.account.createEmailPasswordSession(email, password)
+            console.log(result)
+            return result
         }catch (err){
             console.log(err)
             throw err
