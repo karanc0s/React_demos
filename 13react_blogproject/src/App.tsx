@@ -5,6 +5,7 @@ import {authActions} from "./store/AuthSlice.ts";
 import {Container, Container2, Header, Input} from "./components";
 
 
+
 function App() {
 
     const [isLoading, setIsLoading] = useState(true);
@@ -37,8 +38,10 @@ function App() {
                     <Header/>
 
                     <h1 className="text-3xl font-bold underline">Hello world</h1>
-                    {/*<Footer/>*/}
+                    <Footer/>
+
                 </div>
+
             </div>
         )
 

@@ -25,7 +25,7 @@ class AuthService {
         try {
             const userAcc = await this.account.create(ID.unique() , email , password , name)
             if(userAcc){
-                return this.login(email, password);
+                return this.login({email, password});
             }else{
                 console.error("Error creating new account")
             }
@@ -35,7 +35,7 @@ class AuthService {
         }
     }
 
-    async login(email:string = "user@gmail.com", password:string = "user@123")  {
+    async login({email = "user@gmail.com", password = "user@123"})  {
         try{
             const result = await this.account.createEmailPasswordSession(email, password)
             console.log(result)
@@ -45,6 +45,7 @@ class AuthService {
             throw err
         }
     }
+
 
     async getCurrentUser() {
         try{
