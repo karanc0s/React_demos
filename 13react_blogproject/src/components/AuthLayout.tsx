@@ -4,10 +4,11 @@ import {useSelector} from "react-redux";
 import {RootState} from "../store/store.ts";
 
 interface Props {
-    children: ReactNode
+    children: ReactNode,
+    authentication?: boolean,
 }
 
-const ProtectedLayout : FC<Props> = ( {children} : Props , authentication = true)=> {
+const ProtectedLayout : FC<Props> = ( {children,authentication = true} : Props)=> {
 
     const navigate = useNavigate();
     const [loader , setLoader] = useState(true);

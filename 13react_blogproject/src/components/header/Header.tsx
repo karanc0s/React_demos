@@ -2,11 +2,10 @@ import {Container, Logo, LogoutButton} from "../index.ts";
 import {useNavigate , Link} from "react-router-dom";
 import {useSelector} from "react-redux";
 import {RootState} from "../../store/store.ts";
-import {useState} from "react";
 
 export default function Header() {
 
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
 
     const authStatus : boolean = useSelector((state : RootState)=>{
         const v =  state.authReducers.status
@@ -47,15 +46,17 @@ export default function Header() {
                 <nav className="flex">
 
                     <div className="mr-4">
-                        {/*<Link to="/">Home</Link>*/}
-                        <h2>Logo</h2>
+                        <Link to="/">
+                            <Logo />
+                        </Link>
+
                     </div>
 
                     <ul className="flex ml-auto">
                         {navItem.map((item) => !item.active ? null : (
                             <li key={item.name}>
                                 <button
-                                    // onClick={() => navigate(item.slug)}
+                                    onClick={() => navigate(item.slug)}
                                     className='inline-bock px-6 py-2 duration-200 hover:bg-blue-100 rounded-full'
                                 >{item.name}</button>
                             </li>
@@ -74,6 +75,3 @@ export default function Header() {
         </header>
     )
 }
-
-/// Button.jsx
-/// Input.jsx

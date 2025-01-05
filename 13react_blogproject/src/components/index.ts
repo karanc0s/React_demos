@@ -10,8 +10,8 @@ import PostCard from "./PostCard.tsx";
 import Login from "./Login.tsx";
 import SignUp from "./SignUp.tsx";
 import ProtectedLayout from "./AuthLayout.tsx";
-
-
+import PostForm from "./Postform.tsx";
+import RTE from "./RTE.tsx";
 export {
     Header,
     Footer,
@@ -25,4 +25,6 @@ export {
     Login,
     SignUp,
     ProtectedLayout,
+    PostForm,
+    RTE,
 }
