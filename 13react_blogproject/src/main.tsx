@@ -6,7 +6,7 @@ import {Provider} from "react-redux";
 import store from "./store/store.ts";
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import HomePage from "./pages/HomePage.tsx";
-import {ProtectedLayout} from "./components";
+import {AuthLayout} from "./components";
 import {AddPostPage, AllPostPage, EditPostPage, LoginPage, PostPage, SignUpPage} from "./pages";
 
 const router = createBrowserRouter([
@@ -20,51 +20,53 @@ const router = createBrowserRouter([
             },
             {
                 path: "/login",
-                element: (
-                    <ProtectedLayout authentication={true}>
-                        <LoginPage />
-                    </ProtectedLayout>
-                )
-            },
-            {
-                path: "/signup",
+                element: <LoginPage/>
                 // element: (
-                //     <ProtectedLayout authentication={true}>
-                //         <SignUpPage />
-                //     </ProtectedLayout>
+                //     <AuthLayout authentication={true}>
+                //         <LoginPage />
+                //     </AuthLayout>
                 // )
             },
             {
-                path: "/all-posts",
-                element: (
-                    <ProtectedLayout authentication>
-                        {" "}
-                        <AllPostPage />
-                    </ProtectedLayout>
-                ),
+                path: "/signup",
+                element:<SignUpPage />
+                // element: (
+                //     <AuthLayout authentication={false}>
+                //         <SignUpPage />
+                //     </AuthLayout>
+                // )
             },
-            {
-                path: "/add-post",
-                element: (
-                    <ProtectedLayout authentication>
-                        {" "}
-                        <AddPostPage />
-                    </ProtectedLayout>
-                ),
-            },
-            {
-                path: "/edit-post/:slug",
-                element: (
-                    <ProtectedLayout authentication>
-                        {" "}
-                        <EditPostPage />
-                    </ProtectedLayout>
-                ),
-            },
-            {
-                path: "/post/:slug",
-                element: <PostPage />,
-            },
+            // {
+            //     path: "/all-posts",
+            //     element: (
+            //         <ProtectedLayout authentication>
+            //             {" "}
+            //             <AllPostPage />
+            //         </ProtectedLayout>
+            //     ),
+            // },
+            // {
+            //     path: "/add-post",
+            //     element: (
+            //         <AuthLayout authentication>
+            //             {" "}
+            //             <AddPostPage />
+            //         </AuthLayout>
+            //     ),
+            // },
+            // {
+            //     path: "/edit-post/:slug",
+            //     element: (
+            //         <ProtectedLayout authentication>
+            //             {" "}
+            //             <EditPostPage />
+            //         </ProtectedLayout>
+            //     ),
+            // },
+            // {
+            //     path: "/post/:slug",
+            //     element: <PostPage />,
+            // },
         ]
     }
 ])

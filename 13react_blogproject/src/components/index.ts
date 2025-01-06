@@ -9,7 +9,7 @@ import Select from "./Select.tsx";
 import PostCard from "./PostCard.tsx";
 import Login from "./Login.tsx";
 import SignUp from "./SignUp.tsx";
-import ProtectedLayout from "./AuthLayout.tsx";
+import AuthLayout from "./AuthLayout.tsx";
 import PostForm from "./Postform.tsx";
 import RTE from "./RTE.tsx";
 export {
@@ -24,7 +24,7 @@ export {
     PostCard,
     Login,
     SignUp,
-    ProtectedLayout,
+    AuthLayout,
     PostForm,
     RTE,
 }

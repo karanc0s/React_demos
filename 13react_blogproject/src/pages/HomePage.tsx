@@ -6,7 +6,7 @@ export default function HomePage(){
     const [posts, setPosts] = useState([])
 
     useEffect(() => {
-        PostsService.getPosts().then((posts) => {
+        PostsService.getPost("").then((posts) => {
             if (posts) {
                 setPosts(posts.documents)
             }
@@ -41,4 +41,5 @@ export default function HomePage(){
             </Container>
         </div>
     )
+    // return <h1>This is HomePage</h1>
 }
