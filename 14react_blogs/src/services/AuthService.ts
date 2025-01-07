@@ -1,10 +1,11 @@
-import {Account, Client, ID,} from "appwrite";
+import {Account, Client, ID} from "appwrite";
 import {conf} from "../app/conf.ts";
+import {TUser} from "../types";
 
 class AuthService {
-    private static instance: AuthService;
-    private account: Account;
 
+    private account: Account;
+    private static instance: AuthService;
 
     private constructor() {
         const client : Client = new Client()
@@ -20,12 +21,11 @@ class AuthService {
         }
         return this.instance;
     }
-
     async createAccount(email:string , password:string , name:string) {
         try {
             const userAcc = await this.account.create(ID.unique() , email , password , name)
             if(userAcc){
-                return this.login({email, password});
+                return this.login(email, password);
             }else{
                 console.error("Error creating new account")
             }
@@ -34,10 +34,9 @@ class AuthService {
             throw err
         }
     }
-
-    async login({email = "user@gmail.com", password = "user@123"})  {
+    async login(email = "user@gmail.com", password = "user@123")  {
         try{
-            const result = await this.account.createEmailPasswordSession("root@gmail.com", "root123456")
+            const result = await this.account.createEmailPasswordSession(email, password)
             console.log(result)
             return result
         }catch (err){
@@ -45,13 +44,21 @@ class AuthService {
             throw err
         }
     }
-
-
     async getCurrentUser() {
         try{
-            return await this.account.get()
+            const data = await this.account.get()
+            console.log(data)
+            const user : TUser = {
+                id: data.$id,
+                email: data.email,
+                name: data.name,
+                status: data.status,
+                createdAt: data.$createdAt,
+                lastAccessAt: data.accessedAt
+            }
+            console.log(user)
+            return user
         }catch(err){
-            console.log("getCurrentUser:: Error getting current user")
             console.log(err)
         }
 
@@ -65,7 +72,8 @@ class AuthService {
             console.log(err)
         }
     }
+
+
+
 }
-
-export default AuthService.getInstance();
-
+export const Auth =  AuthService.getInstance();

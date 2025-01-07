@@ -4,8 +4,6 @@ interface Props{
     children : ReactNode
 }
 
-
-
 export default function Container ({children}:Props){
 
     return(

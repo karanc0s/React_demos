@@ -6,7 +6,7 @@ export default function HomePage(){
     const [posts, setPosts] = useState([])
 
     useEffect(() => {
-        PostsService.getPost("").then((posts) => {
+        PostsService.getAllPosts([]).then((posts) => {
             if (posts) {
                 setPosts(posts.documents)
             }

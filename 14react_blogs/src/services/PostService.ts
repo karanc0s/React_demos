@@ -1,10 +1,9 @@
-import {Client, ID, Databases, Storage, Query, Models} from "appwrite";
+import {Client, Databases, ID, Query, Storage} from "appwrite";
 import {conf} from "../app/conf.ts";
-import {IPost} from "../types/IPost.ts";
+import {TPost} from "../types";
 
 
-class PostsService {
-
+class PostService {
     private readonly client;
     private readonly database;
     private readonly bucket;
@@ -18,17 +17,15 @@ class PostsService {
         this.bucket = new Storage(this.client)
 
     }
-
     async createPost(
         title:string ,
         slug:string ,
         content:string ,
         featuredImage:string ,
         status:string ,
-        userID:string
-    ){
+        userId:string ){
         try{
-            return this.database.createDocument(
+            const document = await this.database.createDocument(
                 conf.databaseID,
                 conf.collectionID,
                 slug,
@@ -37,9 +34,19 @@ class PostsService {
                     content,
                     featuredImage,
                     status,
-                    userID
+                    userId
                 }
             )
+            const post: TPost = {
+                title: document.title,
+                content: document.content,
+                slug: String(document.$id),
+                featuredImage: document.featuredImage,
+                status: document.status,
+                userId: document.userId,
+            }
+            console.log(post)
+            return post
         }catch (err){
             console.error(err)
         }
@@ -53,7 +60,7 @@ class PostsService {
         status?:string
     ){
         try{
-            return this.database.updateDocument(
+            const document= await this.database.updateDocument(
                 conf.databaseID,
                 conf.collectionID,
                 slug,
@@ -64,6 +71,15 @@ class PostsService {
                     status,
                 }
             )
+            const post: TPost = {
+                title: document.title,
+                content: document.content,
+                slug: String(document.$id),
+                featuredImage: document.featuredImage,
+                status: document.status,
+                userId: document.userId,
+            }
+            console.log(post)
         }catch (err){
             console.error(err)
         }
@@ -84,19 +100,20 @@ class PostsService {
 
     async getPost(slug:string) {
         try {
-            const data: Models.Document  = await this.database.getDocument(
+            const document = await this.database.getDocument(
                 conf.databaseID,
                 conf.collectionID,
                 slug
             )
-
-            const post: IPost = {
-                title: data.id || "",
-                content: data.content || "",
-                ftImage: data.featuredImage || "",
-                status: data.status || "",
-                userID: data.userId || ""
+            const post: TPost = {
+                title: document.title,
+                content: document.content,
+                slug: String(document.$id),
+                featuredImage: document.featuredImage,
+                status: document.status,
+                userId: document.userId,
             }
+            console.log(post)
             return post
         }catch (e) {
             console.error(e)
@@ -105,23 +122,22 @@ class PostsService {
 
     async getAllPosts(queries = [Query.equal("status" , "active")]){
         try {
-            return await this.database.listDocuments(
+            const list = await this.database.listDocuments(
                 conf.databaseID,
                 conf.collectionID,
                 queries
-            ).then((res)=>{
-                return res.documents.map((data)=>{
-                        const post: IPost = {
-                            title: data.id || "",
-                            content: data.content || "",
-                            ftImage: data.featuredImage || "",
-                            status: data.status || "",
-                            userID: data.userId || ""
-                        }
-                        return post
-                })
+            )
+            return list.documents.map((document)=>{
+                const post: TPost = {
+                    title: document.title,
+                    content: document.content,
+                    slug: String(document.$id),
+                    featuredImage: document.featuredImage,
+                    status: document.status,
+                    userId: document.userId,
+                }
+                return post
             })
-
         }catch (e) {
             console.error(e)
         }
@@ -160,5 +176,5 @@ class PostsService {
     }
 }
 
-const postsService = new PostsService();
+const postsService = new PostService();
 export default postsService;
