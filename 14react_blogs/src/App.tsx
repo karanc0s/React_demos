@@ -1,5 +1,5 @@
 import {Outlet} from "react-router-dom";
-import {Footer, Header, PostForm} from "./components";
+import {Footer, Header} from "./components";
 
 
 function App() {
@@ -9,10 +9,10 @@ function App() {
 
           <div className="w-screen block flex-col ">
               <Header />
-              {/*<main >*/}
-              {/*    <Outlet/>*/}
-              {/*</main>*/}
-              <PostForm />
+              <main >
+                  <Outlet/>
+              </main>
+              {/*<PostForm />*/}
               <Footer />
           </div>
       </div>

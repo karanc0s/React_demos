@@ -1,46 +1,28 @@
-import { Resolver, SubmitHandler, useForm} from "react-hook-form";
+import { useForm} from "react-hook-form";
 import {Link, useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {useState} from "react";
-import {Button, Logo} from "./index.ts";
+import {Button, Input, Logo} from "./index.ts";
 import {Auth} from "../services/AuthService.ts";
 import {AuthActions} from "../store/AuthSlice.ts";
 
 type FormValues = {
     email: string;
-    pass: string;
+    password: string;
 };
-
-const res: Resolver<FormValues> = async (values) => {
-    console.log(values);
-    return {
-        values: !values.email ? {} : values,
-        errors: !values.email
-            ? {
-                email: {
-                    type: "required",
-                    message: "This is required."
-                }
-            }
-            : {}
-    };
-};
-
 
 export default function Login() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [error, setError] = useState("");
 
-    const { handleSubmit, register } = useForm<FormValues>({
-        resolver:res
-    });
-    const login: SubmitHandler<FormValues> = async (data) => {
+    const { handleSubmit, register } = useForm<FormValues>();
+    const login =  async (data : FormValues) => {
         setError("");
         console.log(data);
 
         try{
-            const session = await Auth.login(data.email , data.pass);
+            const session = await Auth.login(data.email , data.password);
             if(session){
                 const userData = await Auth.getCurrentUser()
                 if(userData) dispatch(
@@ -81,44 +63,26 @@ export default function Login() {
                     <div className='space-y-5  my-3'>
 
 
-                        <div className='w-full'>
-                            <input
-                                className="px-3 py-2 rounded-lg bg-white text-black outline-none focus:bg-gray-50 duration-200 border border-gray-200 w-full"
-                                type="email"
-                                placeholder="Email"
-                                {...register("email")}
-                            />
-                        </div>
-                        <div className='w-full'>
-                            <input
-                                className="px-3 py-2 rounded-lg bg-white text-black outline-none focus:bg-gray-50 duration-200 border border-gray-200 w-full"
-                                type="password"
-                                placeholder="Password"
-                                {...register("pass")}
-                            />
-                        </div>
+                        <Input
+                            label='Email'
+                            placeholder="Enter your email"
+                            type="email"
+                            {...register("email" , {
+                                required: true,
+                            })}
+                        />
+                        <Input
+                            label='Password'
+                            placeholder="Enter your password"
+                            type="password"
+                            {...register("password" , {
+                                required: true,
+                            })}
+                        />
 
-                        <Button
-                            type="submit"
-                            className="w-full"
-                        >Sign in</Button>
+                        <Button type="submit" className="w-full">Sign in</Button>
                     </div>
                 </form>
-                {/*<form onSubmit={onSubmit}>*/}
-                {/*    <div>*/}
-                {/*        <label>First Name</label>*/}
-                {/*        <input {...register("firstName")} placeholder="Kotaro"/>*/}
-                {/*        {errors?.firstName && <p>{errors.firstName.message}</p>}*/}
-                {/*    </div>*/}
-
-                {/*    <div>*/}
-                {/*        <label>Last Name</label>*/}
-                {/*        <input {...register("lastName")} placeholder="Sugawara"/>*/}
-                {/*    </div>*/}
-
-                {/*    <input type="submit"/>*/}
-                {/*</form>*/}
-
             </div>
         </div>
     )
