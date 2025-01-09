@@ -38,6 +38,7 @@ class PostService {
                 }
             )
             const post: TPost = {
+                postId: document.$id,
                 title: document.title,
                 content: document.content,
                 slug: String(document.$id),
@@ -72,6 +73,7 @@ class PostService {
                 }
             )
             const post: TPost = {
+                postId: document.$id,
                 title: document.title,
                 content: document.content,
                 slug: String(document.$id),
@@ -106,6 +108,7 @@ class PostService {
                 slug
             )
             const post: TPost = {
+                postId: document.$id,
                 title: document.title,
                 content: document.content,
                 slug: String(document.$id),
@@ -129,6 +132,7 @@ class PostService {
             )
             return list.documents.map((document)=>{
                 const post: TPost = {
+                    postId: document.$id,
                     title: document.title,
                     content: document.content,
                     slug: String(document.$id),

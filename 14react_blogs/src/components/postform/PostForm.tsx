@@ -1,28 +1,53 @@
-import {RootState, TPost} from "../../types";
+import {RootState, TPost , TPostForm} from "../../types";
 import {useNavigate} from "react-router-dom";
 import {useSelector} from "react-redux";
 import {Button, Input, RTE, Select} from "../index.ts";
 import {useForm} from "react-hook-form";
-import PostService from "../../services/PostService.ts";
 import {useCallback, useEffect} from "react";
+import PostService from "../../services/PostService.ts";
 
 interface Props{
     post?: TPost
 }
-export type TFormVals = {
-    title: string,
-    slug: string,
-    content: string,
-    status: string,
-}
+
 export default function PostForm({post}: Props) {
 
-    // const navigate = useNavigate();
-    // const userData = useSelector((state: RootState) => state.authReds.userData);
-    const {register, handleSubmit, watch, setValue, control, getValues} = useForm<TFormVals>()
+    const navigate = useNavigate();
+    const userData = useSelector((state: RootState) => state.authReds.userData);
 
-    const submitPost = async (data)=>{
+    const {register, handleSubmit, watch, setValue, control, getValues} = useForm<TPostForm>()
+    const submitPost = async (data:TPostForm)=>{
         console.log(data);
+        if(post){
+            // update
+            const file = data.image[0] ? await PostService.uploadFile(data.image[0]) : null;
+            if(file){
+                await PostService.deleteFile(post.featuredImage)
+            }
+            // const db = await PostService.updatePost(
+            //     post.postId ,
+            //     fea
+            // )
+
+        }else{
+            const file =await PostService.uploadFile(data.image[0]);
+            if(file && userData){
+                const fileId = file.$id
+                const dbPost = await PostService.createPost(
+                    data.title,
+                    data.slug,
+                    data.content,
+                    fileId,
+                    data.status,
+                    userData.id
+                )
+                if(dbPost){
+                    navigate(`/post/${dbPost.postId}`)
+                }
+            }
+        }
+
+
     }
 
     const slugTransform = useCallback((value: string) => {
@@ -39,7 +64,7 @@ export default function PostForm({post}: Props) {
     useEffect(()=>{
         const subscription = watch((value, {name})=>{
             if(name === "title"){
-                setValue("slug", slugTransform(value.title), { shouldValidate: true });
+                setValue("slug", slugTransform(value.title!), { shouldValidate: true });
             }
         })
 
@@ -64,7 +89,7 @@ export default function PostForm({post}: Props) {
                         setValue("slug", slugTransform(e.currentTarget.value), { shouldValidate: true });
                     }}
                 />
-                <RTE label="Content :" name="content" control={control} defaultValue={getValues("content")} />
+                <RTE label="Content :" control={control} defaultValue={getValues("content")} />
             </div>
             <div className="w-1/3 px-2">
                 <Input

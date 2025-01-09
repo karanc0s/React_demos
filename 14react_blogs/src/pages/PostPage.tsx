@@ -33,7 +33,8 @@ export default function PostPage() {
                 }
             })
         }
-    })
+    }, [navigate, slug])
+
     const deletePost = ()=>{
 
     }

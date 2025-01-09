@@ -1,6 +1,6 @@
 import {createBrowserRouter, createRoutesFromElements, Route } from "react-router-dom";
 import App from "../App.tsx";
-import {HomePage, LoginPage, SignUpPage, AllPostPage, AddPostPage} from "../pages";
+import {HomePage, LoginPage, SignUpPage, AllPostPage, AddPostPage, PostPage} from "../pages";
 import {AuthLayout} from "../components";
 
 
@@ -40,7 +40,7 @@ const Routes = createBrowserRouter(
             }/>
 
             <Route path="/post/:slug" element={
-                <Protected />
+                <PostPage />
             }/>
 
         </Route>
